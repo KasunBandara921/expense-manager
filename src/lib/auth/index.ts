@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
-import { prisma } from "./prisma"
 import bcrypt from "bcryptjs"
+import { prisma } from "@/lib/db/prisma"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -12,6 +12,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
+          console.log("Authorize: missing credentials", { email: credentials?.email })
           return null
         }
 
@@ -20,6 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         })
 
         if (!user) {
+          console.log("Authorize: user not found", { email: credentials.email })
           return null
         }
 
@@ -29,9 +31,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         )
 
         if (!isPasswordValid) {
+          console.log("Authorize: invalid password for user", { email: credentials.email })
           return null
         }
 
+        console.log("Authorize: successful login", { email: user.email, id: user.id })
         return {
           id: user.id,
           email: user.email,
@@ -40,10 +44,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  debug: process.env.NODE_ENV !== "production",
   pages: {
     signIn: "/login",
   },
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    jwt({ token, user }) {
+      if (user?.id) {
+        token.id = user.id
+      }
+      return token
+    },
+    session({ session, token }) {
+      if (session.user && token.id) {
+        session.user.id = token.id as string
+      }
+      return session
+    },
   },
 })

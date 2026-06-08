@@ -66,6 +66,7 @@ export default function RegisterPage() {
                 id="name"
                 type="text"
                 placeholder="John Doe"
+                autoComplete="name"
                 value={formData.name}
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
@@ -80,6 +81,7 @@ export default function RegisterPage() {
                 id="email"
                 type="email"
                 placeholder="john@example.com"
+                autoComplete="email"
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -94,6 +96,7 @@ export default function RegisterPage() {
                 id="password"
                 type="password"
                 placeholder="••••••••"
+                autoComplete="new-password"
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })

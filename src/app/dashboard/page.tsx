@@ -3,6 +3,13 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db/prisma";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ExpenseCharts } from "@/components/dashboard/expense-charts";
+import { AiRecommendations } from "@/components/dashboard/ai-recommendations";
+import {
+  buildCategoryChartData,
+  buildMonthlyChartData,
+} from "@/lib/dashboard/chart-data";
+import { subMonths, startOfMonth } from "date-fns";
 import Link from "next/link";
 
 export default async function DashboardPage() {
@@ -12,29 +19,27 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  // Get user's expenses
-  const expenses = await prisma.expense.findMany({
-    where: { userId: session.user.id as string },
+  const userId = session.user.id;
+
+  const sixMonthsAgo = startOfMonth(subMonths(new Date(), 5));
+
+  const allExpenses = await prisma.expense.findMany({
+    where: { userId },
     include: { category: true },
     orderBy: { date: "desc" },
-    take: 5, // Show latest 5 expenses
   });
 
-  // Calculate total expenses
-  const totalExpenses = await prisma.expense.aggregate({
-    where: { userId: session.user.id as string },
-    _sum: { amount: true },
-  });
-
-  // Get expense count
-  const expenseCount = await prisma.expense.count({
-    where: { userId: session.user.id as string },
-  });
+  const expenses = allExpenses.slice(0, 5);
+  const expenseCount = allExpenses.length;
+  const totalAmount = allExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+  const categoryData = buildCategoryChartData(allExpenses);
+  const monthlyData = buildMonthlyChartData(
+    allExpenses.filter((expense) => expense.date >= sixMonthsAgo)
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
@@ -45,7 +50,6 @@ export default async function DashboardPage() {
           </Link>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader>
@@ -55,7 +59,7 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold">
-                ${totalExpenses._sum.amount?.toFixed(2) || "0.00"}
+                ${totalAmount.toFixed(2)}
               </p>
             </CardContent>
           </Card>
@@ -81,14 +85,17 @@ export default async function DashboardPage() {
               <p className="text-3xl font-bold">
                 $
                 {expenseCount > 0
-                  ? ((totalExpenses._sum.amount || 0) / expenseCount).toFixed(2)
+                  ? (totalAmount / expenseCount).toFixed(2)
                   : "0.00"}
               </p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Recent Expenses */}
+        <AiRecommendations hasExpenses={expenseCount > 0} />
+
+        <ExpenseCharts categoryData={categoryData} monthlyData={monthlyData} />
+
         <Card>
           <CardHeader>
             <CardTitle>Recent Expenses</CardTitle>

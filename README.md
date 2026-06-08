@@ -28,16 +28,24 @@ SmartSpend/
 npm install
 ```
 
-2. Set up your `.env` file with a `DATABASE_URL` for PostgreSQL.
+2. Copy `.env.example` to `.env` and fill in your values (`DATABASE_URL`, `NEXTAUTH_SECRET`, etc.).
 
-3. Generate the Prisma client and push the schema:
+3. **Optional — AI recommendations:** Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey) and add it to `.env`:
+
+```env
+GEMINI_API_KEY="your-key-here"
+```
+
+The free tier is enough for personal use (rate limits apply). The key stays on the server and is never sent to the browser.
+
+4. Generate the Prisma client and push the schema:
 
 ```bash
 npm run db:generate
 npm run db:push
 ```
 
-4. Start the development server:
+5. Start the development server:
 
 ```bash
 npm run dev

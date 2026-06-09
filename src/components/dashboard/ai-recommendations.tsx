@@ -43,7 +43,7 @@ export function AiRecommendations({ hasExpenses }: AiRecommendationsProps) {
   }
 
   return (
-    <Card className="mb-8 border-violet-200 bg-gradient-to-br from-violet-50/80 to-white">
+    <Card className="mb-8 border-violet-200 bg-gradient-to-br from-violet-50/70 to-white/80 backdrop-blur-sm">
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <div>

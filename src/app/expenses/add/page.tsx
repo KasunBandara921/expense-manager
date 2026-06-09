@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,22 +14,12 @@ import {
 } from "@/components/ui/card";
 import type { Category } from "@/types/category";
 
-const DEFAULT_CATEGORIES = [
-  { name: "Food", color: "#ef4444", icon: "🍔" },
-  { name: "Transport", color: "#3b82f6", icon: "🚗" },
-  { name: "Shopping", color: "#8b5cf6", icon: "🛍️" },
-  { name: "Entertainment", color: "#ec4899", icon: "🎬" },
-  { name: "Bills", color: "#f59e0b", icon: "💡" },
-  { name: "Other", color: "#6b7280", icon: "📁" },
-];
-
 export default function AddExpensePage() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const defaultsCreated = useRef(false);
   const [formData, setFormData] = useState({
     amount: "",
     description: "",
@@ -46,22 +36,11 @@ export default function AddExpensePage() {
     setError("");
 
     try {
-      const res = await fetch("/api/categories");
+      const res = await fetch("/api/categories", { cache: "no-store" });
       const data = await res.json();
 
       if (!res.ok) {
         setError(data.error || "Failed to load categories. Please log in again.");
-        return;
-      }
-
-      if (data.categories.length === 0 && !defaultsCreated.current) {
-        defaultsCreated.current = true;
-        const created = await createDefaultCategories();
-        if (!created) {
-          setError("Could not create default categories. Please try again.");
-          return;
-        }
-        await loadCategories();
         return;
       }
 
@@ -70,25 +49,6 @@ export default function AddExpensePage() {
       setError("Failed to load categories.");
     } finally {
       setCategoriesLoading(false);
-    }
-  };
-
-  const createDefaultCategories = async (): Promise<boolean> => {
-    try {
-      for (const cat of DEFAULT_CATEGORIES) {
-        const res = await fetch("/api/categories", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(cat),
-        });
-
-        if (!res.ok) {
-          return false;
-        }
-      }
-      return true;
-    } catch {
-      return false;
     }
   };
 

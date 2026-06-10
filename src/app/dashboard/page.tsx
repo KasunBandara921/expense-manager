@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExpenseCharts } from "@/components/dashboard/expense-charts";
 import { AiRecommendations } from "@/components/dashboard/ai-recommendations";
+import { DeleteExpenseButton } from "@/components/dashboard/delete-expense-button";
 import {
   buildCategoryChartData,
   buildMonthlyChartData,
@@ -119,7 +120,10 @@ export default async function DashboardPage() {
                         {new Date(expense.date).toLocaleDateString()}
                       </p>
                     </div>
-                    <p className="text-lg font-bold">${expense.amount.toFixed(2)}</p>
+                    <div className="flex items-center gap-4">
+                      <p className="text-lg font-bold">${expense.amount.toFixed(2)}</p>
+                      <DeleteExpenseButton expenseId={expense.id} />
+                    </div>
                   </div>
                 ))}
               </div>

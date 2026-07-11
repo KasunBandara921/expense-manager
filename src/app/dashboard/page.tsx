@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExpenseCharts } from "@/components/dashboard/expense-charts";
 import { AiRecommendations } from "@/components/dashboard/ai-recommendations";
 import { DeleteExpenseButton } from "@/components/dashboard/delete-expense-button";
+import { LogoutButton } from "@/components/dashboard/logout-button";
 import {
   buildCategoryChartData,
   buildMonthlyChartData,
@@ -46,9 +47,12 @@ export default async function DashboardPage() {
             <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
             <p className="text-gray-600">Welcome back, {session.user.name}!</p>
           </div>
-          <Link href="/expenses/add">
-            <Button>Add Expense</Button>
-          </Link>
+          <div className="flex items-center gap-3">
+            <LogoutButton />
+            <Link href="/expenses/add">
+              <Button>Add Expense</Button>
+            </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

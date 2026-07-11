@@ -17,12 +17,18 @@ const FALLBACK_COLORS = [
   "#f59e0b",
   "#10b981",
   "#ec4899",
+  "#06b6d4",
+  "#22c55e",
+  "#f472b6",
+  "#a16207",
+  "#6366f1",
 ]
 
 export function buildCategoryChartData(
   expenses: ExpenseWithCategory[]
 ): CategoryChartItem[] {
   const totals = new Map<string, { name: string; value: number; color: string }>()
+  const categoryOrder: string[] = [] // Track insertion order
 
   for (const expense of expenses) {
     const key = expense.category.name
@@ -33,10 +39,18 @@ export function buildCategoryChartData(
       continue
     }
 
+    // Track this category in insertion order
+    categoryOrder.push(key)
+    
+    // Use category color if available, otherwise assign from fallback colors based on order
+    const color = expense.category.color && expense.category.color.trim() 
+      ? expense.category.color 
+      : FALLBACK_COLORS[(categoryOrder.length - 1) % FALLBACK_COLORS.length]
+    
     totals.set(key, {
       name: expense.category.name,
       value: expense.amount,
-      color: expense.category.color ?? FALLBACK_COLORS[totals.size % FALLBACK_COLORS.length],
+      color,
     })
   }
 

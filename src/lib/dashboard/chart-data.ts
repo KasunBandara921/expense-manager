@@ -5,8 +5,10 @@ type ExpenseWithCategory = {
   amount: number
   date: Date
   category: {
+    id: string
     name: string
     color: string | null
+    budget: number | null
   }
 }
 
@@ -27,7 +29,7 @@ const FALLBACK_COLORS = [
 export function buildCategoryChartData(
   expenses: ExpenseWithCategory[]
 ): CategoryChartItem[] {
-  const totals = new Map<string, { name: string; value: number; color: string }>()
+  const totals = new Map<string, CategoryChartItem>()
   const categoryOrder: string[] = [] // Track insertion order
 
   for (const expense of expenses) {
@@ -48,9 +50,11 @@ export function buildCategoryChartData(
       : FALLBACK_COLORS[(categoryOrder.length - 1) % FALLBACK_COLORS.length]
     
     totals.set(key, {
+      id: expense.category.id,
       name: expense.category.name,
       value: expense.amount,
       color,
+      budget: expense.category.budget,
     })
   }
 

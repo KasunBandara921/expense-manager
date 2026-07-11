@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExpenseCharts } from "@/components/dashboard/expense-charts";
 import { DailyExpensesChart } from "@/components/dashboard/daily-expenses-chart";
+import { ThemeToggle } from "@/components/dashboard/theme-toggle";
 import { AiRecommendations } from "@/components/dashboard/ai-recommendations";
 import { DeleteExpenseButton } from "@/components/dashboard/delete-expense-button";
 import { LogoutButton } from "@/components/dashboard/logout-button";
@@ -43,14 +44,15 @@ export default async function DashboardPage() {
   const dailyData = buildDailyChartData(allExpenses);
 
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-6 bg-background text-foreground transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600">Welcome back, {session.user.name}!</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
+            <p className="text-gray-600 dark:text-gray-400">Welcome back, {session.user.name}!</p>
           </div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <LogoutButton />
             <Link href="/expenses/add">
               <Button>Add Expense</Button>
@@ -61,12 +63,12 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-gray-600">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Total Expenses
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                 ${totalAmount.toFixed(2)}
               </p>
             </CardContent>
@@ -74,23 +76,23 @@ export default async function DashboardPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-gray-600">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Number of Expenses
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">{expenseCount}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{expenseCount}</p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-sm font-medium text-gray-600">
+              <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
                 Average Expense
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-3xl font-bold">
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                 $
                 {expenseCount > 0
                   ? (totalAmount / expenseCount).toFixed(2)
@@ -112,7 +114,7 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             {expenses.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">
+              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
                 No expenses yet. Add your first expense to get started!
               </p>
             ) : (
@@ -120,17 +122,17 @@ export default async function DashboardPage() {
                 {expenses.map((expense) => (
                   <div
                     key={expense.id}
-                    className="flex justify-between items-center p-4 bg-gray-50 rounded-lg"
+                    className="flex justify-between items-center p-4 bg-gray-50 dark:bg-gray-900/40 border border-gray-100/60 dark:border-gray-800/40 rounded-lg"
                   >
                     <div>
-                      <p className="font-medium">{expense.description}</p>
-                      <p className="text-sm text-gray-600">
+                      <p className="font-medium text-gray-900 dark:text-gray-100">{expense.description}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         {expense.category.name} •{" "}
                         {new Date(expense.date).toLocaleDateString()}
                       </p>
                     </div>
                     <div className="flex items-center gap-4">
-                      <p className="text-lg font-bold">${expense.amount.toFixed(2)}</p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">${expense.amount.toFixed(2)}</p>
                       <DeleteExpenseButton expenseId={expense.id} />
                     </div>
                   </div>

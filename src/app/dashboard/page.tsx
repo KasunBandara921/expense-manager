@@ -4,12 +4,14 @@ import { prisma } from "@/lib/db/prisma";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ExpenseCharts } from "@/components/dashboard/expense-charts";
+import { DailyExpensesChart } from "@/components/dashboard/daily-expenses-chart";
 import { AiRecommendations } from "@/components/dashboard/ai-recommendations";
 import { DeleteExpenseButton } from "@/components/dashboard/delete-expense-button";
 import { LogoutButton } from "@/components/dashboard/logout-button";
 import {
   buildCategoryChartData,
   buildMonthlyChartData,
+  buildDailyChartData,
 } from "@/lib/dashboard/chart-data";
 import { subMonths, startOfMonth } from "date-fns";
 import Link from "next/link";
@@ -38,6 +40,7 @@ export default async function DashboardPage() {
   const monthlyData = buildMonthlyChartData(
     allExpenses.filter((expense) => expense.date >= sixMonthsAgo)
   );
+  const dailyData = buildDailyChartData(allExpenses);
 
   return (
     <div className="min-h-screen p-6">
@@ -100,6 +103,8 @@ export default async function DashboardPage() {
         <AiRecommendations hasExpenses={expenseCount > 0} />
 
         <ExpenseCharts categoryData={categoryData} monthlyData={monthlyData} />
+
+        <DailyExpensesChart data={dailyData} />
 
         <Card>
           <CardHeader>

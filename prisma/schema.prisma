@@ -36,8 +36,10 @@ model Category {
   name      String
   color     String?
   icon      String?
+  budget    Float?
   userId    String
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   expenses  Expense[]
   createdAt DateTime  @default(now())
 }
+

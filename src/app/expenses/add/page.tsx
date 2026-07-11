@@ -12,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/dashboard/theme-toggle";
+import Link from "next/link";
 import type { Category } from "@/types/category";
 
 export default function AddExpensePage() {
@@ -84,8 +86,14 @@ export default function AddExpensePage() {
   };
 
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-6 bg-background text-foreground transition-colors duration-300">
       <div className="max-w-2xl mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <Link href="/dashboard" className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
+            ← Back to Dashboard
+          </Link>
+          <ThemeToggle />
+        </div>
         <Card>
           <CardHeader>
             <CardTitle>Add New Expense</CardTitle>
@@ -100,13 +108,15 @@ export default function AddExpensePage() {
                 <Input
                   id="amount"
                   type="number"
-                  step="0.01"
                   placeholder="0.00"
+                  step="0.01"
+                  min="0.01"
                   value={formData.amount}
                   onChange={(e) =>
                     setFormData({ ...formData, amount: e.target.value })
                   }
                   required
+                  disabled={loading || categoriesLoading}
                 />
               </div>
 
@@ -121,6 +131,7 @@ export default function AddExpensePage() {
                     setFormData({ ...formData, description: e.target.value })
                   }
                   required
+                  disabled={loading || categoriesLoading}
                 />
               </div>
 
@@ -134,6 +145,7 @@ export default function AddExpensePage() {
                     setFormData({ ...formData, date: e.target.value })
                   }
                   required
+                  disabled={loading || categoriesLoading}
                 />
               </div>
 
@@ -145,16 +157,16 @@ export default function AddExpensePage() {
                   onChange={(e) =>
                     setFormData({ ...formData, categoryId: e.target.value })
                   }
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
                   required
-                  disabled={categoriesLoading || categories.length === 0}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={loading || categoriesLoading || categories.length === 0}
                 >
-                  <option value="">
+                  <option value="" disabled>
                     {categoriesLoading
                       ? "Loading categories..."
                       : categories.length === 0
-                        ? "No categories available"
-                        : "Select a category"}
+                      ? "No categories available"
+                      : "Select a category"}
                   </option>
                   {categories.map((category) => (
                     <option key={category.id} value={category.id}>
@@ -166,7 +178,7 @@ export default function AddExpensePage() {
 
               {error && <p className="text-sm text-red-600">{error}</p>}
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 pt-4">
                 <Button
                   type="button"
                   variant="outline"

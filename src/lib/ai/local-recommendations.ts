@@ -6,8 +6,10 @@ type ExpenseWithCategory = {
   description: string
   date: Date
   category: {
+    id: string
     name: string
     color: string | null
+    budget: number | null
   }
 }
 

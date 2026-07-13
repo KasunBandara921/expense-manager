@@ -461,7 +461,7 @@ export function ExpenseCharts({ categoryData, monthlyData }: ExpenseChartsProps)
               <div className="flex gap-2 pt-2">
                 <button
                   type="button"
-                  onClick={() => setIsOpen ? null : setIsBuilderOpen(false)}
+                  onClick={() => setIsBuilderOpen(false)}
                   disabled={creatingCategory}
                   className="w-1/2 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-lg text-xs transition-colors cursor-pointer disabled:opacity-50"
                 >

@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { AntigravityDots } from "@/components/background/antigravity-dots";
 import "./globals.css";
 
+import { ThemeInitializer } from "@/components/dashboard/theme-initializer";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,27 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  const theme = localStorage.getItem('theme') || 'light';
-                  if (theme === 'dark') {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground transition-colors duration-300`}
       >
+        <ThemeInitializer />
         <AntigravityDots />
         <div className="relative z-10 min-h-screen">{children}</div>
       </body>

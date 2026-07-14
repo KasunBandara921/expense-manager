@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ThemeToggle } from "@/components/dashboard/theme-toggle";
+import { Header } from "@/components/layout/header";
 import Link from "next/link";
 import type { Category } from "@/types/category";
 
@@ -86,13 +86,13 @@ export default function AddExpensePage() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-background text-foreground transition-colors duration-300">
-      <div className="max-w-2xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
+    <div className="min-h-screen pb-12 bg-background text-foreground transition-colors duration-300">
+      <Header />
+      <main className="max-w-2xl mx-auto px-4 pt-8">
+        <div className="mb-6">
           <Link href="/dashboard" className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
             ← Back to Dashboard
           </Link>
-          <ThemeToggle />
         </div>
         <Card>
           <CardHeader>
@@ -198,7 +198,7 @@ export default function AddExpensePage() {
             </form>
           </CardContent>
         </Card>
-      </div>
+      </main>
     </div>
   );
 }

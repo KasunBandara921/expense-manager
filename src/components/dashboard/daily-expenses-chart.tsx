@@ -17,17 +17,17 @@ type DailyExpensesChartProps = {
 }
 
 function formatCurrency(value: number) {
-  return `$${value.toFixed(2)}`
+  return `Rs. ${value.toFixed(2)}`
 }
 
 function formatYAxis(value: number) {
   if (value >= 1000000) {
-    return `$${(value / 1000000).toFixed(1).replace(/\.0$/, "")}M`
+    return `Rs. ${(value / 1000000).toFixed(1).replace(/\.0$/, "")}M`
   }
   if (value >= 1000) {
-    return `$${(value / 1000).toFixed(0)}k`
+    return `Rs. ${(value / 1000).toFixed(0)}k`
   }
-  return `$${value}`
+  return `Rs. ${value}`
 }
 
 export function DailyExpensesChart({ data }: DailyExpensesChartProps) {

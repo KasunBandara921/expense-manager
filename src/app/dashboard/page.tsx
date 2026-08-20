@@ -60,7 +60,7 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                ${totalAmount.toFixed(2)}
+                Rs. {totalAmount.toFixed(2)}
               </p>
             </CardContent>
           </Card>
@@ -84,7 +84,7 @@ export default async function DashboardPage() {
             </CardHeader>
             <CardContent>
               <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-                $
+                Rs.{" "}
                 {expenseCount > 0
                   ? (totalAmount / expenseCount).toFixed(2)
                   : "0.00"}
@@ -143,7 +143,7 @@ export default async function DashboardPage() {
                       </p>
                     </div>
                     <div className="flex items-center gap-4">
-                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">${expense.amount.toFixed(2)}</p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-gray-100">Rs. {expense.amount.toFixed(2)}</p>
                       <DeleteExpenseButton expenseId={expense.id} />
                     </div>
                   </div>

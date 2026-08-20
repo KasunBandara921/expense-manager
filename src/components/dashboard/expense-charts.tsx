@@ -23,17 +23,17 @@ type ExpenseChartsProps = {
 }
 
 function formatCurrency(value: number) {
-  return `$${value.toFixed(2)}`
+  return `Rs. ${value.toFixed(2)}`
 }
 
 function formatYAxis(value: number) {
   if (value >= 1000000) {
-    return `$${(value / 1000000).toFixed(1).replace(/\.0$/, "")}M`
+    return `Rs. ${(value / 1000000).toFixed(1).replace(/\.0$/, "")}M`
   }
   if (value >= 1000) {
-    return `$${(value / 1000).toFixed(0)}k`
+    return `Rs. ${(value / 1000).toFixed(0)}k`
   }
-  return `$${value}`
+  return `Rs. ${value}`
 }
 
 const EMOJI_LIST = [
@@ -270,7 +270,7 @@ export function ExpenseCharts({ categoryData, monthlyData }: ExpenseChartsProps)
                         onSubmit={(e) => handleSaveBudget(e, item.id)}
                         className="flex items-center gap-2 mt-1 w-full bg-white p-2 rounded border border-gray-200 shadow-sm animate-in fade-in slide-in-from-top-1 duration-150"
                       >
-                        <span className="text-xs text-gray-500 font-medium">$</span>
+                        <span className="text-xs text-gray-500 font-medium">Rs.</span>
                         <input
                           type="number"
                           placeholder="Limit"

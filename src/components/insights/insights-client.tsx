@@ -127,7 +127,7 @@ export function InsightsClient({ expenses, hasExpenses }: InsightsClientProps) {
                 <span className="text-xl">{localStats.topCategory?.icon}</span>
                 <p className="text-lg font-bold text-gray-900 dark:text-zinc-50">{localStats.topCategory?.name}</p>
               </div>
-              <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1">Total: ${localStats.topCategory?.spent.toFixed(2)}</p>
+              <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1">Total: Rs. {localStats.topCategory?.spent.toFixed(2)}</p>
             </CardContent>
           </Card>
 
@@ -146,7 +146,7 @@ export function InsightsClient({ expenses, hasExpenses }: InsightsClientProps) {
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-zinc-400">Highest Purchase</span>
             </CardHeader>
             <CardContent>
-              <p className="text-lg font-bold text-gray-900 dark:text-zinc-50">${localStats.highestExpense?.amount.toFixed(2)}</p>
+              <p className="text-lg font-bold text-gray-900 dark:text-zinc-50">Rs. {localStats.highestExpense?.amount.toFixed(2)}</p>
               <p className="text-xs text-gray-500 dark:text-zinc-400 mt-1 truncate" title={localStats.highestExpense?.description}>
                 {localStats.highestExpense?.description}
               </p>
@@ -306,7 +306,7 @@ export function InsightsClient({ expenses, hasExpenses }: InsightsClientProps) {
                     {cat.icon} {cat.name}
                   </span>
                   <span className="text-red-600 dark:text-red-400 font-bold">
-                    ${cat.spent.toFixed(2)} / ${(cat.budget as number).toFixed(2)}
+                    Rs. {cat.spent.toFixed(2)} / Rs. {(cat.budget as number).toFixed(2)}
                   </span>
                 </div>
               ))}

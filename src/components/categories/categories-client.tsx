@@ -249,7 +249,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                         ) : (
                           <div className="group flex items-center gap-1 justify-end">
                             <span className="text-xs text-gray-500 dark:text-zinc-400">
-                              {hasBudget ? `Budget: $${(cat.budget as number).toFixed(2)}` : "No budget"}
+                              {hasBudget ? `Budget: Rs. ${(cat.budget as number).toFixed(2)}` : "No budget"}
                             </span>
                             <button
                               onClick={() => startEditing(cat)}
@@ -260,7 +260,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                           </div>
                         )}
                         <p className="text-sm font-bold text-gray-900 dark:text-zinc-50 mt-0.5">
-                          Spent: ${cat.spent.toFixed(2)}
+                          Spent: Rs. ${cat.spent.toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -271,7 +271,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                     {isOverBudget && (
                       <div className="mb-3 flex items-center gap-1.5 text-xs text-red-600 bg-red-50 border border-red-100 rounded px-2 py-1 dark:bg-red-950/20 dark:border-red-900/30 dark:text-red-400">
                         <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                        <span>Over budget by ${(cat.spent - (cat.budget as number)).toFixed(2)}!</span>
+                        <span>Over budget by Rs. ${(cat.spent - (cat.budget as number)).toFixed(2)}!</span>
                       </div>
                     )}
                     {isNearBudget && (
@@ -295,7 +295,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
                         </div>
                         <div className="flex justify-between text-[10px] text-gray-500 dark:text-zinc-400">
                           <span>{percent.toFixed(0)}% used</span>
-                          <span>${Math.max(0, (cat.budget as number) - cat.spent).toFixed(2)} left</span>
+                          <span>Rs. ${Math.max(0, (cat.budget as number) - cat.spent).toFixed(2)} left</span>
                         </div>
                       </div>
                     )}
@@ -330,7 +330,7 @@ export function CategoriesClient({ initialCategories }: CategoriesClientProps) {
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="budget">Monthly Budget Limit ($) (Optional)</Label>
+                <Label htmlFor="budget">Monthly Budget Limit (Rs.) (Optional)</Label>
                 <Input
                   id="budget"
                   type="number"

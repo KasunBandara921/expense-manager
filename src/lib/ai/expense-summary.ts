@@ -23,25 +23,25 @@ export function buildExpenseSummary(expenses: ExpenseWithCategory[]): string {
 
   const topCategories = categoryData
     .slice(0, 5)
-    .map((item) => `- ${item.name}: $${item.value.toFixed(2)}`)
+    .map((item) => `- ${item.name}: Rs. ${item.value.toFixed(2)}`)
     .join("\n")
 
   const monthlyTrend = monthlyData
-    .map((item) => `- ${item.month}: $${item.total.toFixed(2)}`)
+    .map((item) => `- ${item.month}: Rs. ${item.total.toFixed(2)}`)
     .join("\n")
 
   const recent = expenses
     .slice(0, 8)
     .map(
       (expense) =>
-        `- ${format(expense.date, "yyyy-MM-dd")}: $${expense.amount.toFixed(2)} (${expense.category.name}) — ${expense.description}`
+        `- ${format(expense.date, "yyyy-MM-dd")}: Rs. ${expense.amount.toFixed(2)} (${expense.category.name}) — ${expense.description}`
     )
     .join("\n")
 
   return [
-    `Total spent: $${total.toFixed(2)}`,
+    `Total spent: Rs. ${total.toFixed(2)}`,
     `Number of expenses: ${count}`,
-    `Average expense: $${average.toFixed(2)}`,
+    `Average expense: Rs. ${average.toFixed(2)}`,
     "",
     "Spending by category:",
     topCategories || "- No category data",

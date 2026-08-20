@@ -139,7 +139,7 @@ export function ExpensesClient({ initialExpenses, categories }: ExpensesClientPr
             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-zinc-400">Total Spent (Filtered)</span>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold text-gray-900 dark:text-zinc-50">${stats.total.toFixed(2)}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-zinc-50">Rs. {stats.total.toFixed(2)}</p>
           </CardContent>
         </Card>
 
@@ -157,7 +157,7 @@ export function ExpensesClient({ initialExpenses, categories }: ExpensesClientPr
             <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-zinc-400">Average Expense</span>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold text-gray-900 dark:text-zinc-50">${stats.average.toFixed(2)}</p>
+            <p className="text-2xl font-bold text-gray-900 dark:text-zinc-50">Rs. {stats.average.toFixed(2)}</p>
           </CardContent>
         </Card>
       </div>
@@ -290,7 +290,7 @@ export function ExpensesClient({ initialExpenses, categories }: ExpensesClientPr
                           </span>
                         </td>
                         <td className="py-4 px-4 text-right font-bold text-gray-900 dark:text-zinc-50">
-                          ${expense.amount.toFixed(2)}
+                          Rs. {expense.amount.toFixed(2)}
                         </td>
                         <td className="py-4 px-4 text-center">
                           <Button
@@ -344,7 +344,7 @@ export function ExpensesClient({ initialExpenses, categories }: ExpensesClientPr
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-lg font-bold text-gray-900 dark:text-zinc-50">
-                        ${expense.amount.toFixed(2)}
+                        Rs. {expense.amount.toFixed(2)}
                       </span>
                       <Button
                         variant="ghost"

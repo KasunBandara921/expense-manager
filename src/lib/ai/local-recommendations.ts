@@ -28,7 +28,7 @@ export function generateLocalRecommendations(
     const share = (top.value / total) * 100
     if (share >= 35) {
       tips.push(
-        `${top.name} is your biggest category at $${top.value.toFixed(2)} (${share.toFixed(0)}% of spending). Set a monthly cap for this category to control costs.`
+        `${top.name} is your biggest category at Rs. ${top.value.toFixed(2)} (${share.toFixed(0)}% of spending). Set a monthly cap for this category to control costs.`
       )
     }
   }
@@ -39,18 +39,18 @@ export function generateLocalRecommendations(
     const previous = monthsWithSpending[monthsWithSpending.length - 2]
     if (current.total > previous.total * 1.15) {
       tips.push(
-        `Spending increased from $${previous.total.toFixed(2)} in ${previous.month} to $${current.total.toFixed(2)} in ${current.month}. Review recent purchases to separate needs from wants.`
+        `Spending increased from Rs. ${previous.total.toFixed(2)} in ${previous.month} to Rs. ${current.total.toFixed(2)} in ${current.month}. Review recent purchases to separate needs from wants.`
       )
     } else if (current.total < previous.total * 0.85) {
       tips.push(
-        `Nice progress — spending dropped from $${previous.total.toFixed(2)} to $${current.total.toFixed(2)}. Keep tracking to maintain this habit.`
+        `Nice progress — spending dropped from Rs. ${previous.total.toFixed(2)} to Rs. ${current.total.toFixed(2)}. Keep tracking to maintain this habit.`
       )
     }
   }
 
   if (average > 50) {
     tips.push(
-      `Your average expense is $${average.toFixed(2)}. Try waiting 24 hours before purchases above that amount to reduce impulse spending.`
+      `Your average expense is Rs. ${average.toFixed(2)}. Try waiting 24 hours before purchases above that amount to reduce impulse spending.`
     )
   }
 
@@ -75,7 +75,7 @@ export function generateLocalRecommendations(
   const topLabel = top ? top.name : "several categories"
 
   return {
-    summary: `You've tracked $${total.toFixed(2)} across ${count} expenses, averaging $${average.toFixed(2)} each. Most spending is in ${topLabel}.`,
+    summary: `You've tracked Rs. ${total.toFixed(2)} across ${count} expenses, averaging Rs. ${average.toFixed(2)} each. Most spending is in ${topLabel}.`,
     tips: tips.slice(0, 4),
   }
 }
